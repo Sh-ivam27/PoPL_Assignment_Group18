@@ -28,20 +28,29 @@
       ((null? l) (my-reverse acc))
       (else (loop (cdr l) (cons (f (car l)) acc))))))
 
+;; (make-inserter x len-ok?) -> (lambda (lst) ...)
+;; Recursive reading: returns a function of one list. The function processes every element
+;; (sublists, including the empty list, recursively through itself; atoms unchanged), then puts
+;; x at the front of the processed list when len-ok? is true of the ORIGINAL list's length.
+(define (make-inserter x len-ok?)
+  (letrec ((insert
+            (lambda (lst)
+              (let ((processed
+                     (my-map (lambda (e)
+                               (cond
+                                 ((or (null? e) (pair? e)) (insert e))
+                                 (else e)))
+                             lst)))
+                (cond
+                  ((len-ok? (my-length lst)) (cons x processed))
+                  (else processed))))))
+    insert))
+
 ;; (insert-if-short x lst n) -> list
-;; Recursive reading: first process every element of lst (sublists, including the empty list,
-;; are processed recursively; atoms are kept as they are); then if the length of the ORIGINAL
-;; lst is less than n, put x at the front of the processed list.
+;; Recursive reading: not recursive itself; it builds an inserter that accepts lengths below n
+;; and applies it to lst.
 (define (insert-if-short x lst n)
-  (let ((processed
-         (my-map (lambda (e)
-                   (cond
-                     ((or (null? e) (pair? e)) (insert-if-short x e n))
-                     (else e)))
-                 lst)))
-    (cond
-      ((< (my-length lst) n) (cons x processed))
-      (else processed))))
+  ((make-inserter x (lambda (len) (< len n))) lst))
 
 ;; (print-insert-result) -> prints the result of insert-if-short on stdin input, then a newline
 ;; Recursive reading: not recursive; it reads x, lst and n in that order from standard input
