@@ -100,3 +100,12 @@ equation(List, Equation) :-
 %  lists of length 0 or 1 have no split point, so split_list/3 fails at once.
 generate_equation(List, Equation) :-
     once(equation(List, Equation)).
+
+%% all_equations(+List, -Equations)
+%  P2.b. Equations is the list of all valid equation strings for List,
+%  without duplicates, in standard order of terms. findall/3 collects every
+%  solution of equation/2 (giving [] when there is none) and sort/2 both
+%  removes duplicates and orders the strings.
+all_equations(List, Equations) :-
+    findall(E, equation(List, E), All),
+    sort(All, Equations).
