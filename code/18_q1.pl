@@ -56,3 +56,10 @@ clue(4, Sol) :-
 % department.
 clue(5, Sol) :-
     member(p(_, design, java, _), Sol).
+
+% Clue 6: Carla's project preference is not embedded, and her department is
+% not development.
+clue(6, Sol) :-
+    member(p('Carla', Dept, _, Project), Sol),
+    Project \== embedded,
+    Dept \== development.
