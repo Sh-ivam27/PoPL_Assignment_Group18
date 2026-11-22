@@ -42,3 +42,13 @@
     (cond
       ((< (my-length lst) n) (cons x processed))
       (else processed))))
+
+;; (print-insert-result) -> prints the result of insert-if-short on stdin input, then a newline
+;; Recursive reading: not recursive; it reads x, lst and n in that order from standard input
+;; (let* guarantees the reading order), then displays the result.
+(define (print-insert-result)
+  (let* ((x (read))
+         (lst (read))
+         (n (read)))
+    (display (insert-if-short x lst n))
+    (newline)))
