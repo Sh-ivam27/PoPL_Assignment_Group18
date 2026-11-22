@@ -49,6 +49,16 @@ print_solution([p(Name, Dept, Lang, Project)|Rest]) :-
     format("~w = [~w, ~w, ~w]~n", [Name, Dept, Lang, Project]),
     print_solution(Rest).
 
+%% count_solutions(+Active, -N)
+%  Declarative reading: N is the number of candidate solutions that satisfy
+%  every clue listed in Active (clues not in Active are ignored).
+%  once/1 makes each candidate count at most once, even if a clue could
+%  succeed in more than one way.
+count_solutions(Active, N) :-
+    aggregate_all(count,
+                  ( solution(Sol), once(satisfies(Active, Sol)) ),
+                  N).
+
 %% clue(+N, +Sol)
 %  Declarative reading: clue(N, Sol) holds when clue number N is true in the
 %  fully instantiated solution Sol. All clue/2 clauses are kept together.
