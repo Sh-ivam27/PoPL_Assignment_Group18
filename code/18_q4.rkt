@@ -8,3 +8,22 @@
     (cond
       ((null? l) acc)
       (else (loop (cdr l) (+ acc 1))))))
+
+;; (my-reverse lst) -> list
+;; Recursive reading: reversing the empty list gives the accumulator; otherwise move the first
+;; element onto the front of the accumulator and reverse the rest (tail recursive).
+(define (my-reverse lst)
+  (let loop ((l lst) (acc '()))
+    (cond
+      ((null? l) acc)
+      (else (loop (cdr l) (cons (car l) acc))))))
+
+;; (my-map f lst) -> list
+;; Recursive reading: mapping over the empty list gives the empty list; otherwise apply f to the
+;; first element and continue with the rest. Results are accumulated in reverse and reversed
+;; once at the end, so it is tail recursive and linear on lists of 10,000 elements.
+(define (my-map f lst)
+  (let loop ((l lst) (acc '()))
+    (cond
+      ((null? l) (my-reverse acc))
+      (else (loop (cdr l) (cons (f (car l)) acc))))))
