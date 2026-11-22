@@ -70,3 +70,9 @@ clue(7, Sol) :-
     member(p('Dana', Dept, Lang, _), Sol),
     Lang \== java,
     memberchk(Dept, [research, testing]).
+
+% Clue 8: The friend who prefers data projects works in research and does not
+% use JavaScript.
+clue(8, Sol) :-
+    member(p(_, research, Lang, data), Sol),
+    Lang \== javascript.
