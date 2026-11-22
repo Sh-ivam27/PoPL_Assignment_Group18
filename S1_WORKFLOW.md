@@ -1,13 +1,4 @@
-# S1 Workflow Plan: Binary Tree Traversals (Scheme / Racket)
-
-**Course:** CS F301 Principles of Programming Languages — Assignment 2  
-**Group:** 18  
-**Assigned Student:** Shahil Singh (`ShahilSingh3 <ssingh3369@outlook.com>`)  
-**Target Problem:** **S1 — Binary Tree Traversals** (`code/18_q3.rkt`)  
-**Target Tests:** `tests/test_q3.rkt`  
-**Prompt Log:** `prompts/S1.md`  
-
----
+Changes made to test vidith's account!
 
 ## 1. Problem Specification Summary
 
