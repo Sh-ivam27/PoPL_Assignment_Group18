@@ -1,0 +1,1 @@
+Write the prolog-dev SKILL.md for this assignment (SWI-Prolog 9.x).
