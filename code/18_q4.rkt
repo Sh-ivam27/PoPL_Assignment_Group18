@@ -27,3 +27,18 @@
     (cond
       ((null? l) (my-reverse acc))
       (else (loop (cdr l) (cons (f (car l)) acc))))))
+
+;; (insert-if-short x lst n) -> list
+;; Recursive reading: first process every element of lst (sublists, including the empty list,
+;; are processed recursively; atoms are kept as they are); then if the length of the ORIGINAL
+;; lst is less than n, put x at the front of the processed list.
+(define (insert-if-short x lst n)
+  (let ((processed
+         (my-map (lambda (e)
+                   (cond
+                     ((or (null? e) (pair? e)) (insert-if-short x e n))
+                     (else e)))
+                 lst)))
+    (cond
+      ((< (my-length lst) n) (cons x processed))
+      (else processed))))
