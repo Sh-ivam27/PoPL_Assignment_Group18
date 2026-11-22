@@ -42,3 +42,7 @@ clue(2, Sol) :-
     member(p('Alex', Dept, Lang, _), Sol),
     Dept \== development,
     Lang \== 'c++'.
+
+% Clue 3: The friend working in the testing department likes Python.
+clue(3, Sol) :-
+    member(p(_, testing, python, _), Sol).
