@@ -110,3 +110,10 @@ clue(7, Sol) :-
 clue(8, Sol) :-
     member(p(_, research, Lang, data), Sol),
     Lang \== javascript.
+
+% Repair clue (P1.c). Of the three solutions of clues 1-8, only the one where
+% the designer prefers the embedded project satisfies it, so clues 1-9 have a
+% unique solution.
+% CLUE 9: The friend working in the design department prefers the embedded project.
+clue(9, Sol) :-
+    member(p(_, design, _, embedded), Sol).
