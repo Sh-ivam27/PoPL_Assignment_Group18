@@ -79,3 +79,24 @@ operand_string(Side, ParentPrec, bin(Op, L, R), String) :-
 %  Right operand: bracket if its operator binds the same or looser.
 needs_parens(left,  ChildPrec, ParentPrec) :- ChildPrec <  ParentPrec.
 needs_parens(right, ChildPrec, ParentPrec) :- ChildPrec =< ParentPrec.
+
+%% equation(+List, -Equation)
+%  Declarative reading: Equation is the canonical string "L=R" where L is an
+%  expression over a non-empty prefix of List, R is an expression over the
+%  remaining non-empty suffix, and both have the same integer value.
+%  Backtracking yields every valid equation (one per pair of trees).
+equation(List, Equation) :-
+    split_list(List, LeftNums, RightNums),
+    expr(LeftNums, LT, V),
+    expr(RightNums, RT, RV),
+    V =:= RV,
+    expr_string(LT, LS),
+    expr_string(RT, RS),
+    format(string(Equation), "~w=~w", [LS, RS]).
+
+%% generate_equation(+List, -Equation)
+%  P2.a. Equation is one valid equation for List (the first one found).
+%  Fails, without looping or raising an error, when no valid equation exists;
+%  lists of length 0 or 1 have no split point, so split_list/3 fails at once.
+generate_equation(List, Equation) :-
+    once(equation(List, Equation)).
