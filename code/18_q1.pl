@@ -46,3 +46,8 @@ clue(2, Sol) :-
 % Clue 3: The friend working in the testing department likes Python.
 clue(3, Sol) :-
     member(p(_, testing, python, _), Sol).
+
+% Clue 4: Ben prefers web projects and does not work in testing.
+clue(4, Sol) :-
+    member(p('Ben', Dept, _, web), Sol),
+    Dept \== testing.
