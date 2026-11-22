@@ -35,3 +35,10 @@ clue(1, Sol) :-
     member(p(Name, Dept, _, 'AI'), Sol),
     Dept \== research,
     Name \== 'Dana'.
+
+% Clue 2: Alex does not work in development and does not prefer C++.
+% ("prefer C++" refers to Alex's favorite language.)
+clue(2, Sol) :-
+    member(p('Alex', Dept, Lang, _), Sol),
+    Dept \== development,
+    Lang \== 'c++'.
