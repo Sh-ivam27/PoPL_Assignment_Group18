@@ -63,3 +63,24 @@
   (newline)
   (display (postorder-collect t '()))
   (newline))
+
+;; (tree-metrics t) -> (height . leaf-count)
+;; Recursive reading: the empty tree has height 0 and 0 leaves; a node whose subtrees are both
+;; empty is a leaf with height 1; otherwise height is 1 plus the larger subtree height and the
+;; leaf count is the sum of the subtree leaf counts.
+(define (tree-metrics t)
+  (cond
+    ((null? t) (cons 0 0))
+    ((and (null? (tree-left t)) (null? (tree-right t))) (cons 1 1))
+    (else
+     (let* ((l (tree-metrics (tree-left t)))
+            (r (tree-metrics (tree-right t))))
+       (cons (+ 1 (max (car l) (car r)))
+             (+ (cdr l) (cdr r)))))))
+
+;; (print-height-and-leaves t) -> prints (height leaf-count) on one line, then a newline
+;; Recursive reading: not recursive itself; it computes the metrics pair and displays it as a list.
+(define (print-height-and-leaves t)
+  (let ((m (tree-metrics t)))
+    (display (list (car m) (cdr m)))
+    (newline)))
