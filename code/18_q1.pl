@@ -25,6 +25,30 @@ solution([p('Alex',  D1, L1, P1),
     langs(Ls),    permutation(Ls, [L1, L2, L3, L4]),
     projects(Ps), permutation(Ps, [P1, P2, P3, P4]).
 
+%% satisfies(+Active, +Sol)
+%  Declarative reading: Sol satisfies every clue whose number is in the list
+%  Active. The empty list of clues is satisfied by any solution.
+satisfies([], _).
+satisfies([N|Ns], Sol) :-
+    clue(N, Sol),
+    satisfies(Ns, Sol).
+
+%% main
+%  Finds the first candidate solution that satisfies clues 1 to 8 and prints
+%  it as four lines "Name = [Dept, Lang, Project]" (Alex, Ben, Carla, Dana).
+%  once/1 keeps only the first solution, so main succeeds exactly once.
+main :-
+    once(( solution(Sol), satisfies([1,2,3,4,5,6,7,8], Sol) )),
+    print_solution(Sol).
+
+%% print_solution(+Sol)
+%  Prints each p/4 term of Sol on its own line. ~w writes atoms without
+%  quotes, so 'c++' and 'AI' appear as c++ and AI.
+print_solution([]).
+print_solution([p(Name, Dept, Lang, Project)|Rest]) :-
+    format("~w = [~w, ~w, ~w]~n", [Name, Dept, Lang, Project]),
+    print_solution(Rest).
+
 %% clue(+N, +Sol)
 %  Declarative reading: clue(N, Sol) holds when clue number N is true in the
 %  fully instantiated solution Sol. All clue/2 clauses are kept together.
